@@ -8,19 +8,27 @@ const elements = {
   promiseAmount: document.querySelector('input[name=amount]'),
   promiseButton: document.querySelector('button'),
 }
+let amountOfPromise;
 
 elements.promiseButton.addEventListener('click', promiseHandler);
 
+//promise logic
 function promiseHandler(event){
   event.preventDefault();
   const startDelay = +elements.firstDelay.value;
   const nextStepDelay = +elements.delayStep.value;
-  const amountOfPromise = elements.promiseAmount.value;
+  amountOfPromise = elements.promiseAmount.value;
+  elements.promiseButton.disabled = true;
 
   for(let i = 0; i < amountOfPromise; i++) {
     createPromise(i + 1, startDelay + (nextStepDelay * i))
       .then((value) => onSuccesShow(value))
-      .catch((reason) => onErrorShow(reason));
+      .catch((reason) => onErrorShow(reason))
+      .finally(() => {
+        if (i === amountOfPromise - 1){
+          elements.promiseButton.disabled = false;
+        }
+      });
   }
 }
 
@@ -32,7 +40,8 @@ function createPromise(position, delay) {
           resolve({position, delay});
         } else {
           reject({position, delay});
-      }}, delay)});
+      }
+    }, delay)});
 }
 
 function onSuccesShow({position, delay}){

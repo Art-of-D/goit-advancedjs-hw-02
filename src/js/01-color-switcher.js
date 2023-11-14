@@ -3,6 +3,7 @@ const elements = {
     startButton: document.querySelector("[data-start]"),
     stopButton: document.querySelector("[data-stop]"),
 }
+elements.stopButton.disabled = true;
 let isFirstClick = true;
 let timerId;
 

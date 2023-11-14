@@ -55,6 +55,7 @@ function backClock(){
             elements.seconds.textContent = (gotData.seconds < 10 ? "0" + gotData.seconds : gotData.seconds) || 0;
         } else {
             clearInterval(intervalId);
+            elements.selector.disabled = false;
         }
     }, 1000);
 }
